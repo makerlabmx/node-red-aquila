@@ -3,3 +3,4 @@
 Remember to run:
 
     npm install
+    npm install

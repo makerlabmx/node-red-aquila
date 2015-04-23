@@ -1,0 +1,25 @@
+{
+  "name": "aquila-node-red",
+  "version": "1.0.0",
+  "description": "Remember to run:",
+  "main": "action.js",
+  "dependencies": {
+    "request": "^2.55.0",
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ripflame/node-red-nodes.git"
+  },
+  "author": "Gilberto León",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ripflame/node-red-nodes/issues"
+  },
+  "homepage": "https://github.com/ripflame/node-red-nodes"
+}
