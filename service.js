@@ -13,15 +13,9 @@ module.exports = function(RED) {
     this.url = 'http://' + this.server.host + ':' + this.server.port + '/' +
                 'api/devices/' + this.device + '/service/' + this.serviceName;
 
-    this.username;
-    this.password;
-    this.token;
-
     var request = require('request');
 
     if (this.server) {
-      this.username = this.server.credentials.username;
-      this.password = this.server.credentials.password;
       this.token    = this.server.credentials.token;
     } else {
       console.log("Server undefined");

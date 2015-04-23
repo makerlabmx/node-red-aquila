@@ -1,6 +1,8 @@
 module.exports = function(RED) {
   function aquilaRemoteServerNode(config) {
     RED.nodes.createNode(this, config);
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     this.host = config.host;
     this.port = config.port;
     this.username = this.credentials.username;
@@ -10,7 +12,7 @@ module.exports = function(RED) {
     var request = require('request');
 
     request({
-      url: 'http://' + self.host + ':' + self.port + '/api/token',
+      url: 'https://' + self.host + ':' + self.port + '/api/token',
       method: 'POST',
       json: {
         "user": self.username,
