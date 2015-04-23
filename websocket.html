@@ -1,0 +1,37 @@
+<script type="text/javascript">
+  RED.nodes.registerType('websocket', {
+        category: 'Aquila',
+        color: '#D7D7A0',
+        defaults: {
+          name : {value: ""},
+          server: {value: "", type:"aquila-remote-server", required: true},
+          device: {value: "", required: true},
+          altairEvent: {value: "", required: true}
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: 'white-globe.png',
+        label: function() {
+          return this.name || "Websocket"
+        }
+      });
+</script>
+
+<script data-template-name="websocket" type="text/x-red">
+<div class="form-row">
+  <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
+  <input type="text" placeholder="name" id="node-input-name" value="" name="">
+</div>
+<div class="form-row">
+  <label for="node-input-server"> <i class="icon-tag"></i> Server </label>
+  <input type="text" placeholder="Server" id="node-input-server" value="" name="">
+</div>
+<div class="form-row">
+  <label for="node-input-device"> <i class="icon-tag"></i> Device </label>
+  <input type="text" placeholder="Device" id="node-input-device" value="" name="">
+</div>
+<div class="form-row">
+  <label for="node-input-altairEvent"> <i class="icon-tag"></i> Event </label>
+  <input type="text" placeholder="Event" id="node-input-altairEvent" value="" name="">
+</div>
+</script>

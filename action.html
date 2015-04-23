@@ -1,0 +1,41 @@
+<script type="text/javascript">
+  RED.nodes.registerType('action', {
+        category: 'Aquila',
+        color: '#fdd0a2',
+        defaults: {
+          name: {value:""},
+          server: {value:"", type:"aquila-remote-server"},
+          device: {value: "", required: true},
+          action: {value: "", required: true}
+      },
+      inputs: 1,
+      outputs: 0,
+      icon: "function.png",
+      label: function() {
+        return this.name || "Action";
+      }
+      });
+</script>
+
+<script data-template-name="action" type="text/x-red">
+  <div class="form-row">
+    <label for="node-input-server"> <i class="icon-tag"></i> Name </label>
+    <input type="text" placeholder="Server" id="node-input-server" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
+    <input type="text" placeholder="Name" id="node-input-name" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-device"> <i class="icon-tag"></i> Device </label>
+    <input type="text" placeholder="Device" id="node-input-device" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-action"> <i class="icon-tag"></i> Action </label>
+    <input type="text" placeholder="Action" id="node-input-action" value="" name="">
+  </div>
+</script>
+
+<script type="type=text/x-red" data-help-name="action">
+  <p>Action node</p>
+</script>
