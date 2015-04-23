@@ -13,9 +13,9 @@ module.exports = function(RED) {
     this.url = 'http://' + this.server.host + ':' + this.server.port + '/' +
                 'api/devices/' + this.device + '/service/' + this.serviceName;
 
-    this.username = "";
-    this.password = "";
-    this.token    = "";
+    this.username;
+    this.password;
+    this.token;
 
     var request = require('request');
 
