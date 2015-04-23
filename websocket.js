@@ -33,7 +33,7 @@ module.exports = function(RED) {
 
     socket.on(this.altairEvent, function(device, eventN, param) {
       console.log("Altair event: ", device, " ", eventN, " ", param);
-    })
+    });
 
   }
 
