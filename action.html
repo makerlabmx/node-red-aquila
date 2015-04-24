@@ -19,12 +19,12 @@
 
 <script data-template-name="action" type="text/x-red">
   <div class="form-row">
-    <label for="node-input-server"> <i class="icon-tag"></i> Name </label>
-    <input type="text" placeholder="Server" id="node-input-server" value="" name="">
-  </div>
-  <div class="form-row">
     <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
     <input type="text" placeholder="Name" id="node-input-name" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-server"> <i class="icon-tag"></i> Server </label>
+    <input type="text" placeholder="Server" id="node-input-server" value="" name="">
   </div>
   <div class="form-row">
     <label for="node-input-device"> <i class="icon-tag"></i> Device </label>
@@ -37,5 +37,14 @@
 </script>
 
 <script type="type=text/x-red" data-help-name="action">
-  <p>Action node</p>
+<h2>Action Node</h2>
+<hr>
+<p>Execute an action in the device</p>
+<h3>Parameters</h3>
+<ul>
+  <li>Name: The name of the node</li>
+  <li>Server: The server connection credentials</li>
+  <li>Device: The device identifier, you can find it at the HUB</li>
+  <li>Action: The action to be performed</li>
+</ul>
 </script>

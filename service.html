@@ -1,7 +1,7 @@
 <script type="text/javascript">
   RED.nodes.registerType('service', {
         category : 'Aquila',
-        color    : '#E7E7AE',
+        color    : '#D8BFD8',
         defaults: {
           name        : {value: ""},
           server      : {value: "", type:"aquila-remote-server", required: true},
@@ -46,6 +46,9 @@
 </div>
 </script>
 
-<script type="type=text/x-red" data-help-name="service">
-  <p>Services node</p>
+<script type="text/x-red" data-help-name="service">
+  <h2>Device Service</h2>
+  <hr>
+  <p>Request a service in the device. Deppending on your device implementation
+  you can request GET, POST, PUT or DELETE.</p>
 </script>

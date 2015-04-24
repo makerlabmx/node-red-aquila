@@ -12,7 +12,7 @@ module.exports = function(RED) {
     self.device      = config.device;
     self.altairEvent = config.altairEvent;
 
-    if (this.server) {
+    if (self.server) {
       self.token = self.server.credentials.token;
     } else {
       console.log('Server undefined');
