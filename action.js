@@ -4,29 +4,28 @@ module.exports = function(RED) {
 
     var self = this;
 
-    this.server = RED.nodes.getNode(config.server);
+    self.server = RED.nodes.getNode(config.server);
 
-    this.device = config.device;
-    this.action = config.action;
-    this.url = 'http://' + this.server.host + ':' + this.server.port +
-                '/api/devices/' + this.device + '/action/' + this.action;
+    self.device = config.device;
+    self.action = config.action;
+    self.secure = self.server.secure;
 
-    var username = "";
-    var password = "";
-    var token = "";
+    if (self.secure) {
+      self.url = 'https://' + self.server.host + ':' + self.server.port +
+                  '/api/devices/' + self.device + '/action/' + self.action;
+    } else {
+      self.url = 'http://' + self.server.host + ':' + self.server.port +
+                  '/api/devices/' + self.device + '/action/' + self.action;
+    }
 
     var request = require('request');
 
-    if (this.server) {
-      username = this.server.credentials.username;
-      password = this.server.credentials.password;
-      token = this.server.credentials.token;
-    } else {
+    if (!self.server) {
       console.log("Server undefined");
     }
 
     this.on('input', function(msg) {
-      url = self.url + '/' + msg.payload;
+      var url = self.url + '/' + msg.payload;
       request({
         url: url,
         method: 'GET',
@@ -40,5 +39,6 @@ module.exports = function(RED) {
       });
     });
   }
+
   RED.nodes.registerType("action", actionNode);
 }

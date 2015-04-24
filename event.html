@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  RED.nodes.registerType('altairWebsocket', {
+  RED.nodes.registerType('event', {
         category: 'Aquila',
         color: '#D7D7A0',
         defaults: {
@@ -12,12 +12,12 @@
         outputs: 1,
         icon: "white-globe.png",
         label: function() {
-          return this.name || "Websocket";
+          return this.name || "Event";
         }
       });
 </script>
 
-<script data-template-name="altairWebsocket" type="text/x-red">
+<script data-template-name="event" type="text/x-red">
 <div class="form-row">
   <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
   <input type="text" placeholder="name" id="node-input-name" value="" name="">
@@ -36,6 +36,6 @@
 </div>
 </script>
 
-<script type="text/x-red" data-help-name="altairWebsocket">
-<p>Websocket node</p>
+<script type="text/x-red" data-help-name="event">
+<p>Event node</p>
 </script>

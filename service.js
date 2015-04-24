@@ -4,19 +4,25 @@ module.exports = function(RED) {
 
     var self = this;
 
-    this.server = RED.nodes.getNode(config.server);
+    self.server = RED.nodes.getNode(config.server);
 
-    this.device      = config.device;
-    this.method      = config.method;
-    this.serviceName = config.serviceName;
+    self.device      = config.device;
+    self.method      = config.method;
+    self.serviceName = config.serviceName;
+    self.secure      = self.server.secure;
 
-    this.url = 'http://' + this.server.host + ':' + this.server.port + '/' +
-                'api/devices/' + this.device + '/service/' + this.serviceName;
+    if (self.secure) {
+      self.url = 'https://' + self.server.host + ':' + self.server.port + '/' +
+                  'api/devices/' + self.device + '/service/' + self.serviceName;
+    } else {
+      self.url = 'http://' + self.server.host + ':' + self.server.port + '/' +
+                  'api/devices/' + self.device + '/service/' + self.serviceName;
+    }
 
     var request = require('request');
 
-    if (this.server) {
-      this.token    = this.server.credentials.token;
+    if (self.server) {
+      self.token    = self.server.credentials.token;
     } else {
       console.log("Server undefined");
     }
