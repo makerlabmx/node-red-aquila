@@ -22,18 +22,18 @@ module.exports = function(RED) {
     var request = require('request');
 
     if (self.server) {
-      self.token    = self.server.credentials.token;
+      self.token = self.server.credentials.token;
     } else {
       console.log("Server undefined");
     }
 
-    this.on('input', function(msg) {
+    self.on('input', function(msg) {
       request({
         url: self.url,
-        method: self.method,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + self.server.credentials.token
+        method  : self.method,
+        headers : {
+          'Content-Type'  : 'application/json',
+          'Authorization' : 'Bearer ' + self.server.credentials.token
         },
         body: msg.payload
       }, function (error, response, body){
@@ -47,5 +47,6 @@ module.exports = function(RED) {
     });
 
   }
+
   RED.nodes.registerType("service", serviceNode);
 }

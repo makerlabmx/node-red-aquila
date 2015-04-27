@@ -28,8 +28,8 @@ module.exports = function(RED) {
     }
 
     var socket = io(url, {
-          query: "token=" + self.token,
-          autoconnect: true
+          query       : "token=" + self.token,
+          autoconnect : true
         });
 
     socket.on("connect", function() {
@@ -45,9 +45,9 @@ module.exports = function(RED) {
         if (device.events[aEvent].name === self.altairEvent && eventN === device.events[aEvent].n) {
           var msg = {
             payload: {
-              "device": device,
-              "eventN": eventN,
-              "param": param
+              "device" : device,
+              "eventN" : eventN,
+              "param"  : param
             }
           };
           self.send(msg);

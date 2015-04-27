@@ -1,16 +1,16 @@
 <script type="text/javascript">
   RED.nodes.registerType('wserial', {
-        category: 'Aquila',
-        color: "#C7E9C0",
-        defaults: {
-          name: {value:""},
-          server: {value:"", type:"aquila-remote-server", required: true},
-          deviceAddress: {value:"", required: true}
+        category : 'Aquila',
+        color    : "#C7E9C0",
+        defaults : {
+          name          : {value:""},
+          server        : {value:"", type:"aquila-remote-server", required: true},
+          deviceAddress : {value:"", required: true}
         },
-        inputs: 1,
-        outputs: 1,
-        icon: "feed.png",
-        label: function() {
+        inputs  : 1,
+        outputs : 1,
+        icon    : "feed.png",
+        label   : function() {
           return this.name || 'WSerial';
         }
       });

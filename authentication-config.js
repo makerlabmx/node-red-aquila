@@ -4,9 +4,10 @@ module.exports = function(RED) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
     var self = this;
-    self.host = config.host;
-    self.secure = config.secure;
-    self.port = config.port;
+
+    self.host     = config.host;
+    self.secure   = config.secure;
+    self.port     = config.port;
     self.username = self.credentials.username;
     self.password = self.credentials.password;
 
@@ -22,8 +23,8 @@ module.exports = function(RED) {
       url: self.url,
       method: 'POST',
       json: {
-        "user": self.username,
-        "password": self.password
+        "user"     : self.username,
+        "password" : self.password
       },
       headers: {
         'Content-Type': 'Application/Json'
@@ -32,20 +33,22 @@ module.exports = function(RED) {
       if(error) {
         console.log("There was an error: ", error);
       } else {
-        var credentials = {};
-        credentials.token = body.token;
+        var credentials      = {};
+        credentials.token    = body.token;
         credentials.username = self.username;
         credentials.password = self.password;
+
         RED.nodes.addCredentials(self.id, credentials);
       }
     });
 
   }
+
   RED.nodes.registerType("aquila-remote-server", aquilaRemoteServerNode, {
     credentials: {
-      username: { type: "text" },
-      password: { type: "password" },
-      token: { type: "password" }
+      username  : { type : "text" },
+      password  : { type : "password" },
+      token     : { type : "password" }
     }
   });
 }

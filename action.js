@@ -24,7 +24,7 @@ module.exports = function(RED) {
       console.log("Server undefined");
     }
 
-    this.on('input', function(msg) {
+    self.on('input', function(msg) {
       var url = self.url + '/' + msg.payload;
       request({
         url: url,

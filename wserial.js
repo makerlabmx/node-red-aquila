@@ -4,8 +4,10 @@ module.exports = function(RED) {
 
     var self = this;
 
-    self.server = RED.nodes.getNode(config.server);
-
+    self.server        = RED.nodes.getNode(config.server);
+    self.host          = self.server.host;
+    self.port          = self.server.port;
+    self.secure        = self.server.secure;
     self.deviceAddress = config.deviceAddress;
 
     if (self.server) {
@@ -17,10 +19,10 @@ module.exports = function(RED) {
     var io = require('socket.io-client');
 
     var url;
-    if (self.server.secure) {
-      url = 'https://' + self.server.host + ':' + self.server.port + '/wserial';
+    if (self.secure) {
+      url = 'https://' + self.host + ':' + self.port + '/wserial';
     } else {
-      url = 'http://' + self.server.host + ':' + self.server.port + '/wserial';
+      url = 'http://' + self.host + ':' + self.port + '/wserial';
     }
 
     var socket = io(url, {
