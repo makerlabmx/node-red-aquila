@@ -55,11 +55,11 @@ module.exports = function(RED) {
       }
     });
 
-    this.on('close', function() {
+    self.on('close', function() {
       socket.removeAllListeners('event');
       socket.removeAllListeners('error');
       socket.removeAllListeners('connect');
-    })
+    });
   }
 
   RED.nodes.registerType("event", eventNode);
