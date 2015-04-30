@@ -1,6 +1,7 @@
 #Aquila nodes for Node-Red
 
-Remember to run:
+Aquila's internet of things platform set of nodes for Node-Red.
 
-    npm install
+Remember to run to install dependencies:
+
     npm install
