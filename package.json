@@ -17,6 +17,15 @@
     "makerlab",
     "node-red-aquila"
   ],
+  "node-red" : {
+    "nodes": {
+      "action": "action.js",
+      "authentication-config": "authentication-config.js",
+      "event": "event.js",
+      "service": "service.js",
+      "wserial": "wserial.js"
+    }
+  },
   "author": "Gilberto Leon <info@makerlab.mx> (http://aquila.io/en)",
   "license": "ISC",
   "bugs": {
