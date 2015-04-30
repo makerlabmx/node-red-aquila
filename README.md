@@ -1,6 +1,8 @@
 #Aquila nodes for Node-Red
 
-Remember to run:
+Aquila's internet of things platform set of nodes for Node-Red.
 
-    npm install
-    npm install
+To install - change to your Node-RED user directory.
+
+    cd ~/.node-red
+    npm install node-red-aquila
