@@ -19,36 +19,44 @@
 </script>
 
 <script data-template-name="service" type="text/x-red">
-<div class="form-row">
-  <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
-  <input type="text" placeholder="Name" id="node-input-name" value="" name="">
-</div>
-<div class="form-row">
-  <label for="node-input-server"> <i class="icon-tag"></i> Server </label>
-  <input type="text" placeholder="Server" id="node-input-server" value="" name="">
-</div>
-<div class="form-row">
-    <label for="node-input-method"><i class="fa fa-tasks"></i> Method</label>
-    <select type="text" id="node-input-method" style="width:72%;">
-    <option value="get">GET</option>
-    <option value="post">POST</option>
-    <option value="put">PUT</option>
-    <option value="delete">DELETE</option>
-    </select>
-</div>
-<div class="form-row">
-  <label for="node-input-device"> <i class="icon-tag"></i> Device id </label>
-  <input type="text" placeholder="Device id" id="node-input-device" value="" name="">
-</div>
-<div class="form-row">
-  <label for="node-input-serviceName"> <i class="icon-tag"></i> Service Name </label>
-  <input type="text" placeholder="Service Name" id="node-input-serviceName" value="" name="">
-</div>
+  <div class="form-row">
+    <label for="node-input-name"> <i class="icon-tag"></i> Name </label>
+    <input type="text" placeholder="Name" id="node-input-name" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-server"> <i class="icon-tag"></i> Server </label>
+    <input type="text" placeholder="Server" id="node-input-server" value="" name="">
+  </div>
+  <div class="form-row">
+      <label for="node-input-method"><i class="fa fa-tasks"></i> Method</label>
+      <select type="text" id="node-input-method" style="width:72%;">
+      <option value="get">GET</option>
+      <option value="post">POST</option>
+      <option value="put">PUT</option>
+      <option value="delete">DELETE</option>
+      </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-device"> <i class="icon-tag"></i> Device id </label>
+    <input type="text" placeholder="Device id" id="node-input-device" value="" name="">
+  </div>
+  <div class="form-row">
+    <label for="node-input-serviceName"> <i class="icon-tag"></i> Service name </label>
+    <input type="text" placeholder="Service Name" id="node-input-serviceName" value="" name="">
+  </div>
 </script>
 
 <script type="text/x-red" data-help-name="service">
-  <h2>Device Service</h2>
+  <h2>Service</h2>
   <hr>
   <p>Request a service in the device. Deppending on your device implementation
   you can request GET, POST, PUT or DELETE.</p>
+  <h3>Parameters</h3>
+  <ul>
+    <li>Name: The name of the node</li>
+    <li>Server: The server connection credentials</li>
+    <li>Method: The request method you want to use</li>
+    <li>Device: Device's address, you can find it at the HUB</li>
+    <li>Service Name: The name of the service you want to work with</li>
+  </ul>
 </script>
