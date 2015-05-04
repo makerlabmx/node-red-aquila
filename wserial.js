@@ -5,60 +5,63 @@ module.exports = function(RED) {
     var self = this;
 
     self.server        = RED.nodes.getNode(config.server);
+
     self.host          = self.server.host;
     self.port          = self.server.port;
     self.secure        = self.server.secure;
     self.deviceAddress = config.deviceAddress;
 
     if (self.server) {
-      self.token = self.server.credentials.token;
+      self.server.on('tokenReady', function(token) {
+        self.token = token;
+
+        var url;
+        if (self.secure) {
+          url = 'https://' + self.host + ':' + self.port + '/wserial';
+        } else {
+          url = 'http://' + self.host + ':' + self.port + '/wserial';
+        }
+
+        var io = require('socket.io-client');
+        self.socket = io(url, {
+          query: "token=" + self.token,
+          autoconnect: true
+        });
+
+        self.socket.on("connect", function() {
+          console.log("Socket connected");
+        });
+
+        self.socket.on('error', function(err) {
+          console.log("Socket connection error: ", err);
+        });
+
+        self.socket.on('data', function(data) {
+          if (parseInt(data.srcAddr) === parseInt(self.deviceAddress)) {
+            var msg = {
+              payload: data.data
+            };
+            self.send(msg);
+          }
+        });
+      });
     } else {
       console.log('Server undefined');
     }
 
-    var io = require('socket.io-client');
-
-    var url;
-    if (self.secure) {
-      url = 'https://' + self.host + ':' + self.port + '/wserial';
-    } else {
-      url = 'http://' + self.host + ':' + self.port + '/wserial';
-    }
-
-    var socket = io(url, {
-      query: "token=" + self.token,
-      autoconnect: true
-    });
-
-    socket.on("connect", function() {
-      console.log("Socket connected");
-    });
-
-    socket.on('error', function(err) {
-      console.log("Socket connection error: ", err);
-    });
-
-    socket.on('data', function(data) {
-      if (parseInt(data.srcAddr) === parseInt(self.deviceAddress)) {
-        var msg = {
-          payload: data.data
-        };
-        self.send(msg);
-      }
-    });
 
     self.on('input', function(msg) {
       var data = {
         'dstAddr': self.deviceAddress,
         'data': msg.payload
       };
-      socket.emit('data', data);
+      self.socket.emit('data', data);
     });
 
     self.on('close', function() {
-      socket.removeAllListeners('data');
-      socket.removeAllListeners('error');
-      socket.removeAllListeners('connect');
+      self.socket.removeAllListeners('data');
+      self.socket.removeAllListeners('error');
+      self.socket.removeAllListeners('connect');
     });
 
   }

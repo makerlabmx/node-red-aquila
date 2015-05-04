@@ -10,7 +10,6 @@ module.exports = function(RED) {
     self.altairEvent = config.altairEvent;
 
     if (self.server) {
-
       self.server.on('tokenReady', function(token) {
         self.token = token;
 
@@ -25,7 +24,7 @@ module.exports = function(RED) {
         self.socket = io(url, {
               query       : "token=" + self.token,
               autoconnect : true
-            });
+        });
 
         self.socket.on("connect", function() {
           console.log("Socket connected");
