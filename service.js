@@ -16,16 +16,11 @@ module.exports = function(RED) {
         self.token = token;
       });
 
-      self.token  = self.server.credentials.token;
-      self.secure = self.server.secure;
-      self.host   = self.server.host;
-      self.port   = self.server.port;
-
-      if (self.secure) {
-        self.url = 'https://' + self.host + ':' + self.port + '/' +
+      if (self.server.secure) {
+        self.url = 'https://' + self.server.host + ':' + self.server.port + '/' +
                     'api/devices/' + self.device + '/service/' + self.serviceName;
       } else {
-        self.url = 'http://' + self.host + ':' + self.port + '/' +
+        self.url = 'http://' + self.server.host + ':' + self.server.port + '/' +
                     'api/devices/' + self.device + '/service/' + self.serviceName;
       }
 
@@ -49,12 +44,9 @@ module.exports = function(RED) {
           }
         });
       });
-
     } else {
       console.log("Server undefined");
     }
-
-
   }
 
   RED.nodes.registerType("service", serviceNode);
