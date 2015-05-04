@@ -1,6 +1,6 @@
 {
   "name": "node-red-aquila",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Aquila's internet of things platform nodes for Node-Red.",
   "dependencies": {
     "request": "^2.55.0",
