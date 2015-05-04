@@ -37,7 +37,7 @@ module.exports = function(RED) {
         });
 
         self.socket.on('data', function(data) {
-          if (parseInt(data.srcAddr) === parseInt(self.deviceAddress)) {
+          if (parseInt(data.srcAddr) === parseInt(hexToDec(self.deviceAddress))) {
             var msg = {
               payload: data.data
             };
@@ -52,7 +52,7 @@ module.exports = function(RED) {
 
     self.on('input', function(msg) {
       var data = {
-        'dstAddr': self.deviceAddress,
+        'dstAddr': hexToDec(self.deviceAddress),
         'data': msg.payload
       };
       self.socket.emit('data', data);
@@ -67,4 +67,8 @@ module.exports = function(RED) {
   }
 
   RED.nodes.registerType('wserial', wserialNode);
+}
+
+function hexToDec(h) {
+  return parseInt(h, 16);
 }
