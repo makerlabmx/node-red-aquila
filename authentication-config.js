@@ -27,7 +27,7 @@ module.exports = function(RED) {
         "password" : self.password
       },
       headers: {
-        'Content-Type': 'Application/Json'
+        'Content-Type': 'application/json'
       }
     }, function(error, response, body) {
       if(error) {
@@ -39,6 +39,7 @@ module.exports = function(RED) {
         credentials.password = self.password;
 
         RED.nodes.addCredentials(self.id, credentials);
+        self.emit('tokenReady', credentials.token);
       }
     });
 

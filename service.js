@@ -9,43 +9,44 @@ module.exports = function(RED) {
     self.device      = config.device;
     self.method      = config.method;
     self.serviceName = config.serviceName;
-    self.secure      = self.server.secure;
-
-    if (self.secure) {
-      self.url = 'https://' + self.server.host + ':' + self.server.port + '/' +
-                  'api/devices/' + self.device + '/service/' + self.serviceName;
-    } else {
-      self.url = 'http://' + self.server.host + ':' + self.server.port + '/' +
-                  'api/devices/' + self.device + '/service/' + self.serviceName;
-    }
-
-    var request = require('request');
 
     if (self.server) {
-      self.token = self.server.credentials.token;
+
+      self.server.on('tokenReady', function(token) {
+        self.token = token;
+      });
+
+      if (self.server.secure) {
+        self.url = 'https://' + self.server.host + ':' + self.server.port + '/' +
+                    'api/devices/' + self.device + '/service/' + self.serviceName;
+      } else {
+        self.url = 'http://' + self.server.host + ':' + self.server.port + '/' +
+                    'api/devices/' + self.device + '/service/' + self.serviceName;
+      }
+
+      var request = require('request');
+
+      self.on('input', function(msg) {
+        request({
+          url: self.url,
+          method  : self.method,
+          headers : {
+            'Content-Type'  : 'application/json',
+            'Authorization' : 'Bearer ' + self.token
+          },
+          body: msg.payload
+        }, function (error, response, body){
+          if (error) {
+            console.log("There was an error with the request: ", error);
+          } else {
+            var msg = { payload: body};
+            self.send(msg);
+          }
+        });
+      });
     } else {
       console.log("Server undefined");
     }
-
-    self.on('input', function(msg) {
-      request({
-        url: self.url,
-        method  : self.method,
-        headers : {
-          'Content-Type'  : 'application/json',
-          'Authorization' : 'Bearer ' + self.server.credentials.token
-        },
-        body: msg.payload
-      }, function (error, response, body){
-        if (error) {
-          console.log("There was an error with the request: ", error);
-        } else {
-          var msg = { payload: body};
-          self.send(msg);
-        }
-      });
-    });
-
   }
 
   RED.nodes.registerType("service", serviceNode);
