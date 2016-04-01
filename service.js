@@ -39,7 +39,7 @@ module.exports = function(RED) {
           if (error) {
             console.log("There was an error with the request: ", error);
           } else {
-            var msg = { payload: body};
+            var msg = { payload: body };
             self.send(msg);
           }
         });

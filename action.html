@@ -44,7 +44,9 @@
   <ul>
     <li>Name: The name of the node</li>
     <li>Server: The server connection credentials</li>
-    <li>Device: Device's address, you can find it at the HUB</li>
-    <li>Action: The action to be performed</li>
+    <li>Device: Device's long address, you can find it at the HUB under device details</li>
+    <li>Action: The number of the action to be performed. Must be a number from 0 to 255</li>
   </ul>
+  <h3>Input</h3>
+  <p>msg.payload can contain a number from 0 to 255, if so, it will be passed as the parameter of the action to the device.</p>
 </script>

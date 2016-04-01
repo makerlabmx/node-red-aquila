@@ -35,6 +35,9 @@ module.exports = function(RED) {
         });
 
         self.socket.on('event', function(device, eventN, param) {
+          // Check device
+          if(self.device !== device.id) return;
+          // Check event
           for ( var aEvent in device.events ) {
             if (device.events[aEvent].name === self.altairEvent && eventN === device.events[aEvent].n) {
               var msg = {
@@ -44,7 +47,7 @@ module.exports = function(RED) {
                   "param"  : param
                 }
               };
-              self.send(msg);
+              return self.send(msg);
             }
           }
         });
