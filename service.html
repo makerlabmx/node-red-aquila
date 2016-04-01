@@ -53,14 +53,14 @@
   you can request GET, POST, PUT or DELETE.</p>
   <h3>Parameters</h3>
   <ul>
-    <li>Name: The name of the node</li>
-    <li>Server: The server connection credentials</li>
-    <li>Method: The request method you want to use</li>
-    <li>Device: Device's long address, you can find it at the HUB under device details</li>
-    <li>Service Name: The name of the service you want to work with</li>
+    <li><b>Name:</b> The name of the node</li>
+    <li><b>Server:</b> The server connection credentials</li>
+    <li><b>Method:</b> The request method you want to use</li>
+    <li><b>Device:</b> Device's hardware address, you can find it at the HUB under device details</li>
+    <li><b>Service Name:</b> The name of the service you want to work with (CASE SENSITIVE)</li>
   </ul>
   <h3>Input</h3>
-  <p>Any data in msg.payload will be sent as the request's body</p>
+  <p>Any JSON data in msg.payload will be sent as the request's body. IMPORTANT: msg.payload must be a JSON object, otherwise it will be ignored.</p>
   <h3>Output</h3>
   <p>Response data will be received in msg.payload</p>
 </script>

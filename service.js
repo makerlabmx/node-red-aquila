@@ -1,3 +1,5 @@
+var utilAquila = require('./utilAquila');
+
 module.exports = function(RED) {
   function serviceNode(config) {
     RED.nodes.createNode(this, config);
@@ -6,45 +8,51 @@ module.exports = function(RED) {
 
     self.server = RED.nodes.getNode(config.server);
 
-    self.device      = config.device;
+    self.device      = utilAquila.normalizeAddr(config.device);
     self.method      = config.method;
     self.serviceName = config.serviceName;
 
-    if (self.server) {
+    if (self.server)
+    {
 
-      self.server.on('tokenReady', function(token) {
+      self.server.on('tokenReady', function(token) 
+      {
         self.token = token;
-      });
 
-      if (self.server.secure) {
-        self.url = 'https://' + self.server.host + ':' + self.server.port + '/' +
+        var httpStr = "http://";
+        if(self.server.secure) httpStr = "https://";
+        self.url = httpStr + self.server.host + ':' + self.server.port + '/' +
                     'api/devices/' + self.device + '/service/' + self.serviceName;
-      } else {
-        self.url = 'http://' + self.server.host + ':' + self.server.port + '/' +
-                    'api/devices/' + self.device + '/service/' + self.serviceName;
-      }
+        
+        var request = require('request');
 
-      var request = require('request');
+        self.on('input', function(msg)
+        {
+          var bodyObject = {};
+          if(typeof(msg.payload) === 'object') bodyObject = msg.payload;
 
-      self.on('input', function(msg) {
-        request({
-          url: self.url,
-          method  : self.method,
-          headers : {
-            'Content-Type'  : 'application/json',
-            'Authorization' : 'Bearer ' + self.token
-          },
-          body: msg.payload
-        }, function (error, response, body){
-          if (error) {
-            console.log("There was an error with the request: ", error);
-          } else {
-            var msg = { payload: body };
-            self.send(msg);
-          }
+          request({
+            url: self.url,
+            method  : self.method,
+            headers : {
+              'Content-Type'  : 'application/json',
+              'Authorization' : 'Bearer ' + self.token
+            },
+            body: JSON.stringify(bodyObject)
+          }, function (error, response, body){
+            if (error) {
+              return console.log("There was an error with the request: ", error);
+            } else {
+              var msg = { payload: body };
+              return self.send(msg);
+            }
+          });
         });
       });
-    } else {
+
+    }
+    else
+    {
       console.log("Server undefined");
     }
   }

@@ -8,19 +8,17 @@ module.exports = function(RED) {
 
     self.host          = self.server.host;
     self.port          = self.server.port;
-    self.secure        = self.server.secure;
     self.deviceAddress = config.deviceAddress;
 
     if (self.server) {
-      self.server.on('tokenReady', function(token) {
+      self.server.on('tokenReady', function(token)
+      {
         self.token = token;
 
         var url;
-        if (self.secure) {
-          url = 'https://' + self.host + ':' + self.port + '/wserial';
-        } else {
-          url = 'http://' + self.host + ':' + self.port + '/wserial';
-        }
+        var httpStr = "http://";
+        if(self.server.secure) httpStr = "https://";
+        url = httpStr + self.host + ':' + self.port + '/wserial';
 
         var io = require('socket.io-client');
         self.socket = io(url, {
@@ -28,37 +26,49 @@ module.exports = function(RED) {
           autoconnect: true
         });
 
-        self.socket.on("connect", function() {
+        self.socket.on("connect", function()
+        {
           console.log("Socket connected");
         });
 
-        self.socket.on('error', function(err) {
+        self.socket.on('error', function(err)
+        {
           console.log("Socket connection error: ", err);
         });
 
-        self.socket.on('data', function(data) {
-          if (parseInt(data.srcAddr) === parseInt(hexToDec(self.deviceAddress))) {
+        self.socket.on('data', function(data)
+        {
+          // if we are listening broadcast or is from the device we have configured
+          if ( parseInt(data.srcAddr) === hexToDec(self.deviceAddress) || hexToDec(self.deviceAddress) === hexToDec("FFFF"))
+          {
             var msg = {
-              payload: data.data
+              payload: {
+                data: data.data,
+                srcAddr: data.srcAddr.toString(16).toUpperCase()
+              }
             };
             self.send(msg);
           }
         });
+
+        self.on('input', function(msg)
+        {
+          var data = {
+            'dstAddr': hexToDec(self.deviceAddress),
+            'data': String(msg.payload)
+          };
+          self.socket.emit('data', data);
+        });
+
       });
-    } else {
+    }
+    else
+    {
       console.log('Server undefined');
     }
 
-
-    self.on('input', function(msg) {
-      var data = {
-        'dstAddr': hexToDec(self.deviceAddress),
-        'data': msg.payload
-      };
-      self.socket.emit('data', data);
-    });
-
-    self.on('close', function() {
+    self.on('close', function()
+    {
       self.socket.removeAllListeners('data');
       self.socket.removeAllListeners('error');
       self.socket.removeAllListeners('connect');
@@ -69,6 +79,7 @@ module.exports = function(RED) {
   RED.nodes.registerType('wserial', wserialNode);
 }
 
-function hexToDec(h) {
+function hexToDec(h)
+{
   return parseInt(h, 16);
 }

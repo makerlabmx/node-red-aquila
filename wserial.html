@@ -37,12 +37,12 @@
   <p>Simple wireless serial socket</p>
   <h3>Parameters</h3>
   <ul>
-    <li>Name: The name of the node</li>
-    <li>Server: The server connection credentials</li>
-    <li>Device: Device's <b>short</b> address, you can find it at the HUB under device details</li>
+    <li><b>Name:</b> The name of the node</li>
+    <li><b>Server:</b> The server connection credentials</li>
+    <li><b>Device:</b> Device's <b>short</b> address, you can find it at the HUB under device details. If you want to listen to every device and/or send to every device, use broadcast address: FFFF</li>
   </ul>
   <h3>Input</h3>
   <p>Any string in msg.payload will be sent to the device.</p>
   <h3>Output</h3>
-  <p>Data sent from the device will be received as a string in msg.payload</p>
+  <p>Data sent from the device will be received as a string in msg.payload.data. You can check which device sent the data in msg.payload.srcAddr</p>
 </script>
