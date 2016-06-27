@@ -16,8 +16,14 @@ module.exports = function(RED) {
 
       var request = require('request');
 
+      // Mark initial status as disconnected
+      self.status({fill:"red",shape:"ring",text:"disconnected"});
+
       self.server.on('tokenReady', function(token)
       {
+        // Mark as connected
+        self.status({fill:"green",shape:"dot",text:"connected"});
+
         self.token = token;
 
         var httpStr = "http://";
@@ -38,9 +44,16 @@ module.exports = function(RED) {
             }
           }, function (error, response, body) {
             if(error) {
-              return console.log("There was an error with the action: ", error);
+              return console.log("node-red-aquila: There was an error with the action: ", error);
             }
-            var device = JSON.parse(body);
+
+            try {
+              var device = JSON.parse(body);
+            }
+            catch(err) {
+              return console.log("node-red-aquila: JSON Parsing Error:", err);
+            }
+
             for(var i in device.actions)
             {
               if(device.actions[i].name === self.action)
@@ -63,7 +76,7 @@ module.exports = function(RED) {
 
         self.on('input', function(msg)
         {
-          if(!self.url) return console.log("Error: Action misconfigured, chaeck that the Action is valid");
+          if(!self.url) return console.log("node-red-aquila: Error: Action misconfigured, chaeck that the Action is valid");
           var paramString = "";
           if(typeof(msg.payload) === 'number' && msg.payload >= 0 && msg.payload < 256 ) paramString = '/' + msg.payload;
           var url = self.url + paramString;
@@ -75,7 +88,7 @@ module.exports = function(RED) {
             }
           }, function (error, response, body) {
             if(error) {
-              return console.log("There was an error with the action: ", error);
+              return console.log("node-red-aquila: There was an error with the action: ", error);
             }
           });
         });
@@ -85,7 +98,7 @@ module.exports = function(RED) {
     }
     else
     {
-      console.log("Server undefined");
+      console.log("node-red-aquila: Server undefined");
     }
   }
 

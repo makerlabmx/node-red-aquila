@@ -13,8 +13,14 @@ module.exports = function(RED) {
 
     if (self.server)
     {
+      // Mark initial status as disconnected
+      self.status({fill:"red",shape:"ring",text:"disconnected"});
+
       self.server.on('tokenReady', function(token)
       {
+        // Mark as connected
+        self.status({fill:"green",shape:"dot",text:"connected"});
+
         self.token = token;
 
         var url;
@@ -30,12 +36,12 @@ module.exports = function(RED) {
 
         self.socket.on("connect", function()
         {
-          console.log("Socket connected");
+          //console.log("Socket connected");
         });
 
         self.socket.on("error", function(err)
         {
-          console.log("Socket connection error: ", err);
+          console.log("node-red-aquila: Socket connection error: ", err);
         });
 
         self.socket.on('event', function(device, eventN, param)
@@ -81,11 +87,12 @@ module.exports = function(RED) {
     }
     else
     {
-      console.log('Server undefined');
+      console.log('node-red-aquila: Server undefined');
     }
 
     self.on('close', function()
     {
+      if(!self.socket) return;
       self.socket.removeAllListeners('event');
       self.socket.removeAllListeners('error');
       self.socket.removeAllListeners('connect');

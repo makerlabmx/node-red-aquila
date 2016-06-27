@@ -31,15 +31,26 @@ module.exports = function(RED) {
       }
     }, function(error, response, body) {
       if(error) {
-        console.log("There was an error: ", error);
+        console.log("node-red-aquila: There was an error: ", error);
       } else {
         var credentials      = {};
         credentials.token    = body.token;
         credentials.username = self.username;
         credentials.password = self.password;
 
-        RED.nodes.addCredentials(self.id, credentials);
-        self.emit('tokenReady', credentials.token);
+        if(credentials.token == null)
+        {
+          // Do nothing
+          console.log("node-red-aquila: Bad token, check your login credentials.");
+          return;
+        }
+        else
+        {
+          // We are correctly connected
+          RED.nodes.addCredentials(self.id, credentials);
+          self.emit('tokenReady', credentials.token);
+        }
+        
       }
     });
 

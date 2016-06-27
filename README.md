@@ -15,6 +15,9 @@ To install manually change to your Node-RED user directory.
 
     cd ~/.node-red
     mkdir nodes
+    cd nodes
     git clone https://github.com/makerlabmx/node-red-aquila.git
+    cd node-red-aquila
+    npm install
 
 Don't forget to restart Node-RED so changes are applied.

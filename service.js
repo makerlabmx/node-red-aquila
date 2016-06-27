@@ -14,9 +14,14 @@ module.exports = function(RED) {
 
     if (self.server)
     {
+      // Mark initial status as disconnected
+      self.status({fill:"red",shape:"ring",text:"disconnected"});
 
       self.server.on('tokenReady', function(token) 
       {
+        // Mark as connected
+        self.status({fill:"green",shape:"dot",text:"connected"});
+
         self.token = token;
 
         var httpStr = "http://";
@@ -31,6 +36,13 @@ module.exports = function(RED) {
           var bodyObject = {};
           if(typeof(msg.payload) === 'object') bodyObject = msg.payload;
 
+          try {
+            var body = JSON.stringify(bodyObject);
+          } 
+          catch(err) {
+            return console.log("node-red-aquila: JSON Parsing Error:", err);
+          }
+
           request({
             url: self.url,
             method  : self.method,
@@ -38,10 +50,10 @@ module.exports = function(RED) {
               'Content-Type'  : 'application/json',
               'Authorization' : 'Bearer ' + self.token
             },
-            body: JSON.stringify(bodyObject)
+            body: body
           }, function (error, response, body){
             if (error) {
-              return console.log("There was an error with the request: ", error);
+              return console.log("node-red-aquila: There was an error with the request: ", error);
             } else {
               var msg = { payload: body };
               return self.send(msg);
@@ -53,7 +65,7 @@ module.exports = function(RED) {
     }
     else
     {
-      console.log("Server undefined");
+      console.log("node-red-aquila: Server undefined");
     }
   }
 
